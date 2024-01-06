@@ -1,4 +1,4 @@
-const test = require('./controller/user')
+require('./controller/user/getAllUser.controller')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')

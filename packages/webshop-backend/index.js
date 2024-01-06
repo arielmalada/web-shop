@@ -1,6 +1,7 @@
 const app = require('./app')
 const config = require('./utils/config')
-const logger = require('./utils/logger')
+const logger = require('./utils/logger');
+const responseJSON = require('./utils/response');
 const router = require('./utils/router')
 const http = require("http");
 
@@ -15,8 +16,7 @@ const server = http.createServer((request, response) => {
             if (route) {
                 route.handler(request, response);
             } else {
-                response.writeHead(404, { 'Content-Type': 'text/plain' });
-                response.end('Not found');
+                responseJSON(response, 404, { message: 'Not Found' });
             }
             break;
         }
