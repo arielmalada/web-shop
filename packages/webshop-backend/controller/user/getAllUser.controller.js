@@ -1,12 +1,14 @@
 const UserModel = require('../../models/user.model');
 const responseJSON = require('../../utils/response');
 const router = require('../../utils/router')
+// generate jsdoc
 /**
- * Send all users as JSON
- *
- * @param {http.ServerResponse} response Server's response
- * @returns {http.ServerResponse} response
+ * 
+ * @param {*} request // not used
+ * @param {*} response //
+ * @returns 
  */
+
 // use router and UserModel to get all users
 const getAllUsers = async (request, response) => {
     try {
