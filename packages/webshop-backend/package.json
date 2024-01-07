@@ -1,0 +1,38 @@
+{
+  "name": "@webshop/backend",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "arielmalada <arielmalada@outlook.com>",
+  "homepage": "https://github.com/arielmalada/web-shop#readme",
+  "license": "ISC",
+  "main": "lib/webshop-backend.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arielmalada/web-shop.git"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "mocha"
+    
+  },
+  "bugs": {
+    "url": "https://github.com/arielmalada/web-shop/issues"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "mongoose": "^7.1.1"
+  },
+  "devDependencies": {
+    "mocha": "^10.2.0",
+    "nodemon": "^2.0.22"
+  }
+}

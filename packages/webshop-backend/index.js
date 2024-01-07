@@ -1,0 +1,64 @@
+require('./app')
+const config = require('./utils/config')
+const responseJSON = require('./utils/response');
+const router = require('./utils/router')
+const http = require("http");
+
+
+//handle matching path with id with request url
+const matchPathWithId = (path, url) => {
+    const pathParts = path.split('/');
+    const urlParts = url.split('/');
+    if (pathParts.length !== urlParts.length) {
+        return false;
+    }
+
+    for (let i = 0; i < pathParts.length; i++) {
+        if (pathParts[i] !== urlParts[i] && pathParts[i][0] !== ':') {
+            return false;
+        }
+    }
+
+    return true;
+};
+
+const buildParams = (route, reqURL)=> {
+    const params = {};
+    const pathParts = route.path.split('/');
+    const urlParts = reqURL.split('/');
+    for (let i = 0; i < pathParts.length; i++) {
+        if (pathParts[i][0] === ':') {
+            params[pathParts[i].slice(1)] = urlParts[i];
+        }
+    }
+    return params;
+}
+
+const server = http.createServer((request, response) => {
+    const reqURL = request.url;
+    const reqMethod = request.method;
+    switch (reqMethod) {
+        case 'GET': {
+            const route = router.routes.find(
+                (route) => route.method === 'GET' && matchPathWithId(route.path, reqURL)
+            );
+            if (route) {
+                const params = buildParams(route, reqURL);
+                request.params = params;
+                route.handler(request, response);
+            } else {
+                responseJSON(response, 404, { message: 'Not Found' });
+            }
+            break;
+        }
+        default: {
+            break
+        }
+    }
+
+
+});
+
+server.listen(config.PORT, () => {
+    console.log("Server is running on Port:", config.PORT);
+});
