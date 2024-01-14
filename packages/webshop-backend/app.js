@@ -1,8 +1,7 @@
-require('./controller/user/getAllUser.controller')
-require('./controller/user/getUser.controller')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
+require('./routes')
 
 mongoose.set('strictQuery', false)
 

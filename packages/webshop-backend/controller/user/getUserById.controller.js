@@ -1,9 +1,7 @@
 const UserModel = require('../../models/user.model');
-const router = require('../../utils/router');
 const { handleSuccess, handleNotFound, handleError } = require('../../utils/handler');
 const responseJSON = require('../../utils/response');
 
-// generate jsdoc
 /**
  * 
  * @param {*} request 
@@ -11,7 +9,7 @@ const responseJSON = require('../../utils/response');
  * @returns 
  */
 
-const getUser = async (request, response) => {
+const getUserByIdController = async (request, response) => {
     const validateId = (id) => id.match(/^[0-9a-fA-F]{24}$/);
     try {
         if (!validateId(request.params.id)) {
@@ -32,4 +30,4 @@ const getUser = async (request, response) => {
     }
 };
 
-router.get('/user/:id', getUser)
+module.exports = getUserByIdController;
