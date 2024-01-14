@@ -1,10 +1,12 @@
 const router = require('./utils/router')
+const { isAuth } = require('./utils/middleware')
+
 const getAllUsersController = require('./controller/user/getAllUser.controller')
 const getUserByIdController = require('./controller/user/getUserById.controller')
 const registerController = require('./controller/user/register.controller')
 const loginController = require('./controller/user/login.controller')
+const modifyUserController = require('./controller/user/modifyUser.controller')
 
-const { isAuth } = require('./utils/middleware')
 
 const handlePrivateRouteWithMiddleware = (middleware, next) => (request, response) => {
     middleware(request, response, next)
@@ -17,3 +19,4 @@ router.get('/user', handlePrivateRouteWithMiddleware(isAuth, getAllUsersControll
 router.get('/user/:id', getUserByIdController)
 router.post('/register', registerController)
 router.post('/login', loginController)
+router.put('/user/:id', modifyUserController)

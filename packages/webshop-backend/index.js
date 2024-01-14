@@ -89,6 +89,27 @@ const server = http.createServer((request, response) => {
             }
             break;
         }
+        case 'PUT': {
+            const route = router.routes.find(
+                (route) => route.method === 'PUT' && matchPathWithId(route.path, reqURL)
+            );
+            console.log(route)
+            if (route) {
+                const params = buildParams(route, reqURL);
+                parseBody(request)
+                    .then((body) => {
+                        request.params = params;
+                        request.body = body;
+                        route.handler(request, response);
+                    })
+                    .catch((error) => {
+                        responseJSON(response, 400, { message: error.message });
+                    });
+            } else {
+                responseJSON(response, 404, { message: 'Not Found' });
+            }
+            break;
+        }
         default: {
             break
         }
