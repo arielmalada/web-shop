@@ -34,6 +34,26 @@ const buildParams = (route, reqURL)=> {
     return params;
 }
 
+const parseBody = (request) => {
+    return new Promise((resolve, reject) => {
+        let body = '';
+        request.on('data', (chunk) => {
+            body += chunk;
+        });
+        request.on('end', () => {
+            try {
+                const parsedBody = JSON.parse(body);
+                resolve(parsedBody);
+            } catch (error) {
+                reject(error);
+            }
+        });
+        request.on('error', (error) => {
+            reject(error);
+        });
+    });
+}
+
 const server = http.createServer((request, response) => {
     const reqURL = request.url;
     const reqMethod = request.method;
@@ -46,6 +66,45 @@ const server = http.createServer((request, response) => {
                 const params = buildParams(route, reqURL);
                 request.params = params;
                 route.handler(request, response);
+            } else {
+                responseJSON(response, 404, { message: 'Not Found' });
+            }
+            break;
+        }
+        case 'POST': {
+            const route = router.routes.find(
+                (route) => route.method === 'POST' && route.path === reqURL
+            );
+            if (route) {
+                parseBody(request)
+                    .then((body) => {
+                        request.body = body;
+                        route.handler(request, response);
+                    })
+                    .catch((error) => {
+                        responseJSON(response, 400, { message: error.message });
+                    });
+            } else {
+                responseJSON(response, 404, { message: 'Not Found' });
+            }
+            break;
+        }
+        case 'PUT': {
+            const route = router.routes.find(
+                (route) => route.method === 'PUT' && matchPathWithId(route.path, reqURL)
+            );
+            console.log(route)
+            if (route) {
+                const params = buildParams(route, reqURL);
+                parseBody(request)
+                    .then((body) => {
+                        request.params = params;
+                        request.body = body;
+                        route.handler(request, response);
+                    })
+                    .catch((error) => {
+                        responseJSON(response, 400, { message: error.message });
+                    });
             } else {
                 responseJSON(response, 404, { message: 'Not Found' });
             }

@@ -21,7 +21,6 @@
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "mocha"
-    
   },
   "bugs": {
     "url": "https://github.com/arielmalada/web-shop/issues"
@@ -29,6 +28,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.1.1"
   },
   "devDependencies": {

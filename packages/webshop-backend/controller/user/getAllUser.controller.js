@@ -1,7 +1,5 @@
 const UserModel = require('../../models/user.model');
 const responseJSON = require('../../utils/response');
-const router = require('../../utils/router')
-// generate jsdoc
 /**
  * 
  * @param {*} request // not used
@@ -10,7 +8,7 @@ const router = require('../../utils/router')
  */
 
 // use router and UserModel to get all users
-const getAllUsers = async (request, response) => {
+const getAllUsersController= async (request, response) => {
     try {
         const users = await UserModel.find({})
         responseJSON(response, 200, users)
@@ -21,4 +19,4 @@ const getAllUsers = async (request, response) => {
     }
 }
 
-router.get('/user', getAllUsers)
+module.exports = getAllUsersController;

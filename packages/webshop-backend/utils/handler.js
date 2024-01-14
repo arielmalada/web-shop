@@ -6,8 +6,11 @@ const handleError = (response, error) => {
     responseJSON(response, 500, { message: error.message });
 };
 
+const handleUnauthorized = (response, message) => responseJSON(response, 401, message);
+
 module.exports = {
     handleSuccess,
     handleNotFound,
-    handleError
+    handleError,
+    handleUnauthorized
 }
