@@ -6,6 +6,7 @@ const getUserByIdController = require('./controller/user/getUserById.controller'
 const registerController = require('./controller/user/register.controller')
 const loginController = require('./controller/user/login.controller')
 const modifyUserController = require('./controller/user/modifyUser.controller')
+const deleteUserByIdController = require('./controller/user/deleteUser.controller')
 
 
 const handlePrivateRouteWithMiddleware = (middleware, next) => (request, response) => {
@@ -20,3 +21,4 @@ router.get('/user/:id', getUserByIdController)
 router.post('/register', registerController)
 router.post('/login', loginController)
 router.put('/user/:id', modifyUserController)
+router.delete('/user/:id', deleteUserByIdController)

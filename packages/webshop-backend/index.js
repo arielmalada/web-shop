@@ -93,7 +93,6 @@ const server = http.createServer((request, response) => {
             const route = router.routes.find(
                 (route) => route.method === 'PUT' && matchPathWithId(route.path, reqURL)
             );
-            console.log(route)
             if (route) {
                 const params = buildParams(route, reqURL);
                 parseBody(request)
@@ -105,6 +104,19 @@ const server = http.createServer((request, response) => {
                     .catch((error) => {
                         responseJSON(response, 400, { message: error.message });
                     });
+            } else {
+                responseJSON(response, 404, { message: 'Not Found' });
+            }
+            break;
+        }
+        case 'DELETE': {
+            const route = router.routes.find(
+                (route) => route.method === 'DELETE' && matchPathWithId(route.path, reqURL)
+            );
+            if (route) {
+                const params = buildParams(route, reqURL);
+                request.params = params;
+                route.handler(request, response);
             } else {
                 responseJSON(response, 404, { message: 'Not Found' });
             }
